@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": true, // Allow JavaScript files
+    "checkJs": false, // Skip type-checking JavaScript
+    "jsx": "react-jsx", // Support JSX for React projects
+    "outDir": "./dist", // Output directory to avoid overwriting
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.js"]
+}

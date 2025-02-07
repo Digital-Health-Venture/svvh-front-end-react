@@ -1,0 +1,61 @@
+# Node.js dependencies
+node_modules
+
+# Build output
+build
+
+# Temporary files
+dist
+.temp
+.cache
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor specific
+.idea
+.vscode
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+coverage
+
+# Service workers
+public/sw.js
+public/workbox-*.js
+
+# Test output
+*.log
+coverage/
+
+# React Native / Expo
+.expo
+.expo-shared
+
+# Parcel-bundler cache
+.cache
+
+# macOS system files
+._*
+
+# WebStorm project files
+*.iml
+
+# Yarn Integrity
+.yarn-integrity
+
+# Misc
+.sass-cache
+.next
+out
