@@ -82,6 +82,7 @@ const ACSVideoCall: React.FC = () => {
       !callAgent &&
       !callAgentInitialized
     ) {
+      setCallAgentInitialized(true);
       const createCallAgent = async () => {
         try {
           const agent = await statefulCallClient.createCallAgent(
@@ -96,7 +97,6 @@ const ACSVideoCall: React.FC = () => {
       };
       createCallAgent();
     }
-    setCallAgentInitialized(true);
   }, [
     statefulCallClient,
     tokenCredential,
