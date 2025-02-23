@@ -60,53 +60,12 @@ const ACSVideoCall: React.FC = () => {
     [userAccessToken]
   );
 
-  const [statefulCallClient, setStatefulCallClient] =
-    useState<StatefulCallClient>();
-  const [callAgent, setCallAgent] = useState<CallAgent>();
-  const [call, setCall] = useState<Call>();
+  // Options 1: Use high-level api (Call adapter)
+
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
-  const [callAgentInitialized, setCallAgentInitialized] = useState(false);
 
   useEffect(() => {
-    if (userId && !statefulCallClient) {
-      setStatefulCallClient(
-        createStatefulCallClient({ userId: { communicationUserId: userId } })
-      );
-    }
-  }, [userId, statefulCallClient]);
-
-  useEffect(() => {
-    if (
-      statefulCallClient &&
-      tokenCredential &&
-      !callAgent &&
-      !callAgentInitialized
-    ) {
-      setCallAgentInitialized(true);
-      const createCallAgent = async () => {
-        try {
-          const agent = await statefulCallClient.createCallAgent(
-            tokenCredential,
-            { displayName }
-          );
-          setCallAgent(agent);
-        } catch (error) {
-          console.error("Error creating call agent:", error);
-          setCallAgentInitialized(false);
-        }
-      };
-      createCallAgent();
-    }
-  }, [
-    statefulCallClient,
-    tokenCredential,
-    callAgent,
-    displayName,
-    callAgentInitialized,
-  ]);
-
-  useEffect(() => {
-    if (callAgent && callSessionId && !callAdapter) {
+    if (callSessionId && !callAdapter) {
       const createAdapter = async () => {
         try {
           const adapter = await createAzureCommunicationCallAdapter({
@@ -123,7 +82,6 @@ const ACSVideoCall: React.FC = () => {
       createAdapter();
     }
   }, [
-    callAgent,
     callSessionId,
     tokenCredential,
     userId,
@@ -131,46 +89,88 @@ const ACSVideoCall: React.FC = () => {
     callAdapter,
   ]);
 
-  const startCall = useCallback(() => {
-    if (!call && callAgent && callSessionId) {
-      const callOptions = {
-        videoOptions: { localVideoStreams: [] },
-        audioOptions: { muted: false },
-      };
-      const activeCall = callAgent.join(
-        { groupId: callSessionId },
-        callOptions
-      );
-      setCall(activeCall);
-    }
-  }, [call, callAgent, callSessionId]);
+  // Options 2: Use low-level api (Call agent)
 
-  useEffect(() => {
-    if (isTransactionReady) {
-      startCall();
-    }
-  }, [isTransactionReady, startCall, call]);
+  // const [statefulCallClient, setStatefulCallClient] =
+  //   useState<StatefulCallClient>();
+  // const [callAgent, setCallAgent] = useState<CallAgent>();
+  // const [call, setCall] = useState<Call>();
+  // const [callAgentInitialized, setCallAgentInitialized] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      if (callAgent) {
-        callAgent.dispose();
-      }
-    };
-  }, [callAgent]);
+  // useEffect(() => {
+  //   if (userId && !statefulCallClient) {
+  //     setStatefulCallClient(
+  //       createStatefulCallClient({ userId: { communicationUserId: userId } })
+  //     );
+  //   }
+  // }, [userId, statefulCallClient]);
 
-  useEffect(() => {
-    console.log("callAdapter", callAdapter);
-  }, [callAdapter]);
+  // useEffect(() => {
+  //   if (
+  //     statefulCallClient &&
+  //     tokenCredential &&
+  //     !callAgent &&
+  //     !callAgentInitialized
+  //   ) {
+  //     setCallAgentInitialized(true);
+  //     const createCallAgent = async () => {
+  //       try {
+  //         const agent = await statefulCallClient.createCallAgent(
+  //           tokenCredential,
+  //           { displayName }
+  //         );
+  //         setCallAgent(agent);
+  //       } catch (error) {
+  //         console.error("Error creating call agent:", error);
+  //         setCallAgentInitialized(false);
+  //       }
+  //     };
+  //     createCallAgent();
+  //   }
+  // }, [
+  //   statefulCallClient,
+  //   tokenCredential,
+  //   callAgent,
+  //   displayName,
+  //   callAgentInitialized,
+  // ]);
+
+  // const startCall = useCallback(() => {
+  //   if (!call && callAgent && callSessionId) {
+  //     const callOptions = {
+  //       videoOptions: { localVideoStreams: [] },
+  //       audioOptions: { muted: false },
+  //     };
+  //     const activeCall = callAgent.join(
+  //       { groupId: callSessionId }
+  //     );
+  //     setCall(activeCall);
+  //   }
+  // }, [call, callAgent, callSessionId]);
+
+  // useEffect(() => {
+  //   if (isTransactionReady) {
+  //     startCall();
+  //   }
+  // }, [isTransactionReady, startCall, call]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (callAgent) {
+  //       callAgent.dispose();
+  //     }
+  //   };
+  // }, [callAgent]);
 
   return (
     <div style={{ height: "100vh" }}>
-      {statefulCallClient && callAgent && callAdapter ? (
+      {callAdapter ? <CallComposite adapter={callAdapter} /> :  <p>Initializing adapter call...</p>}
+      {/* {statefulCallClient && callAgent ? (
         <CallClientProvider callClient={statefulCallClient}>
           <CallAgentProvider callAgent={callAgent}>
             {call ? (
               <CallProvider call={call}>
-                <CallComposite adapter={callAdapter} />
+                <CallingComponents/>
               </CallProvider>
             ) : (
               <button onClick={startCall}>Start Call</button>
@@ -178,8 +178,9 @@ const ACSVideoCall: React.FC = () => {
           </CallAgentProvider>
         </CallClientProvider>
       ) : (
-        <p>Initializing call...</p>
-      )}
+        <p>Initializing agent call...</p>
+      )
+      } */}
     </div>
   );
 };
