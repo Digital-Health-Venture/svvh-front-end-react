@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { transactionService, Session } from "../services/transactionService";
 
@@ -9,8 +9,12 @@ const useACSTransaction = (
 ) => {
   const [session, setSessionState] = useState<Session | null>(null);
   const [isTransactionReady, setIsTransactionReady] = useState(false);
+  const hasStarted = useRef(false); // Track if transaction has already started
 
   useEffect(() => {
+    if (hasStarted.current) return; // Prevent duplicate execution
+    hasStarted.current = true;
+
     let intervalId: NodeJS.Timeout | null = null;
 
     const initiateTransactionFlow = async () => {
@@ -27,7 +31,7 @@ const useACSTransaction = (
           callAccessToken: "",
           callSessionId: "",
           callUserId: "",
-          callPatientName: userData.firstName || "Default Name",
+          callPatientName:  userData.firstName || "Default Name",
         };
         transactionService.setSession(newSession);
 
