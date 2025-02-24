@@ -2,9 +2,8 @@ import ACSVideoCall from "../components/ACSVideoCall.tsx";
 
 export default function Call() {
   return (
-    <h1>
-      Call Page
+    <div className="flex flex-col items-center justify-center h-screen gap-y-4">
       <ACSVideoCall />
-    </h1>
+    </div>
   );
 }
