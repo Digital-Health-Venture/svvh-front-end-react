@@ -163,7 +163,7 @@ const ACSVideoCall: React.FC = () => {
   // }, [callAgent]);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div className="flex flex-col items-center justify-center h-screen">
       {callAdapter ? <CallComposite adapter={callAdapter} /> :  <p>Initializing adapter call...</p>}
       {/* {statefulCallClient && callAgent ? (
         <CallClientProvider callClient={statefulCallClient}>
