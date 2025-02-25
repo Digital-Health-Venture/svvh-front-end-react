@@ -81,13 +81,7 @@ const ACSVideoCall: React.FC = () => {
       };
       createAdapter();
     }
-  }, [
-    callSessionId,
-    tokenCredential,
-    userId,
-    displayName,
-    callAdapter,
-  ]);
+  }, [callSessionId, tokenCredential, userId, displayName, callAdapter]);
 
   // Options 2: Use low-level api (Call agent)
 
@@ -164,7 +158,11 @@ const ACSVideoCall: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      {callAdapter ? <CallComposite adapter={callAdapter} /> :  <p>Initializing adapter call...</p>}
+      {callAdapter ? (
+        <CallComposite adapter={callAdapter} formFactor="mobile" />
+      ) : (
+        <p>Initializing adapter call...</p>
+      )}
       {/* {statefulCallClient && callAgent ? (
         <CallClientProvider callClient={statefulCallClient}>
           <CallAgentProvider callAgent={callAgent}>
