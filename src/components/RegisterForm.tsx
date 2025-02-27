@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { formatDate } from "../functions/formatDate";
+import { formatDateIdCard, formatDatePassport } from "../functions/formatDate";
 
 import { OrbitProgress } from "react-loading-indicators";
 
@@ -124,7 +124,7 @@ const RegisterForm: React.FC = () => {
             firstName: docData?.name_en?.value || "",
             surname: docData?.surname_en?.value || "",
             idCardNumber: docData?.id_number?.value || "",
-            birthday: formatDate(docData?.dob_en?.value || ""),
+            birthday: formatDateIdCard(docData?.dob_en?.value || ""),
           };
 
           setExtractedData(extractedInfo);
@@ -134,7 +134,7 @@ const RegisterForm: React.FC = () => {
             firstName: docData?.name_en?.value || "",
             surname: docData?.surname_en?.value || "",
             idCardNumber: docData?.passport_number?.value || "",
-            birthday: formatDate(docData?.date_of_birth?.value || ""),
+            birthday: formatDatePassport(docData?.date_of_birth?.value || ""),
           };
 
           setExtractedData(extractedInfo);
