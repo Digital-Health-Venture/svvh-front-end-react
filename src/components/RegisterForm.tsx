@@ -11,7 +11,7 @@ import { OrbitProgress } from "react-loading-indicators";
 import { RegisterFormType } from "../types/RegisterForm";
 
 const RegisterForm: React.FC = () => {
-  const { register, setValue, handleSubmit, trigger } =
+  const { register, setValue, handleSubmit, trigger, reset } =
     useForm<RegisterFormType>();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -133,7 +133,7 @@ const RegisterForm: React.FC = () => {
           const extractedInfo = {
             firstName: docData?.name_en?.value || "",
             surname: docData?.surname_en?.value || "",
-            idCardNumber: docData?.identification_number?.value || "",
+            idCardNumber: docData?.passport_number?.value || "",
             birthday: formatDate(docData?.date_of_birth?.value || ""),
           };
 
@@ -148,6 +148,12 @@ const RegisterForm: React.FC = () => {
     } finally {
       setIsScanning(false);
     }
+  };
+
+  const retakePhoto = () => {
+    setExtractedData({});
+    setCapturedImage(null);
+    reset();
   };
 
   const onSubmit = (data: RegisterFormType) => {
@@ -216,7 +222,7 @@ const RegisterForm: React.FC = () => {
             className="w-full max-w-md"
           />
           <button
-            onClick={() => setCapturedImage(null)}
+            onClick={retakePhoto}
             className="mt-2 p-2 mb-2 bg-red-500 text-white rounded"
           >
             Retake
