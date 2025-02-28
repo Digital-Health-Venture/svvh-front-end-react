@@ -58,7 +58,7 @@ export default function AgreementModal({ open, onClose }: AgreementModalProps) {
                   onClick={handleScrollToBottom}
                   className="absolute bottom-2 right-2 bg-white bg-opacity-75 rounded-full p-2 shadow transition hover:bg-blue-100"
                 >
-                  <ArrowDownToLine className="text-blue-500 w-8 h-8" />
+                  <ArrowDownToLine className="text-svvh-green w-8 h-8" />
                 </button>
               )}
             </div>
@@ -77,7 +77,7 @@ export default function AgreementModal({ open, onClose }: AgreementModalProps) {
             </div>
 
             <div className="flex justify-center gap-x-4 mt-4 items-center">
-              <button className="px-4 py-2 rounded-3xl text-blue-500 bg-white border border-blue-500 hover:bg-blue-200 w-[120px]">
+              <button className="px-4 py-2 rounded-3xl text-svvh-green bg-white border border-svvh-green hover:bg-svvh-light-green w-[120px]">
                 ย้อนกลับ
               </button>
               <button
