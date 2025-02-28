@@ -4,11 +4,11 @@ import { AGREEMENT_TEXT } from "../../constants/agreement";
 
 import { ArrowDownToLine } from "lucide-react";
 
-import SVVH_LOGO from "../../assets/image/logo.png";
-
 import { AgreementModalProps } from "../../types/AgreementModalProps";
 
 import useAgreementModal from "../../hooks/useAgreementModal";
+
+import { SVVH_LOGO } from "../../constants/assets";
 
 export default function AgreementModal({ open, onClose }: AgreementModalProps) {
   const {
