@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/forms/RegisterForm";
 
 import AgreementModal from "../components/modals/AgreementModal";
 
@@ -15,8 +15,8 @@ export default function Register() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-y-4">
-      <RegisterForm />
       <AgreementModal open={isModalOpen} onClose={handleCloseModal} />
+      <RegisterForm open={isModalOpen} />
     </div>
   );
 }
